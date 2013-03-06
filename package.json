@@ -1,0 +1,26 @@
+{
+  "name": "mapPins",
+  "version": "0.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "xml2js": "~0.1.14",
+    "underscore": "~1.3.3",
+    "express": "~3.0.0rc1",
+    "jade": "~0.27.0",
+    "less-middleware": "~0.1.4",
+    "mongoose": "~3.0.1",
+    "async": "~0.1.22",
+    "q": "~0.8.10",
+    "should": "~1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://smellybob43@bitbucket.org/smellybob43/mappins.git"
+  },
+  "license": "BSD",
+  "description": ""
+}

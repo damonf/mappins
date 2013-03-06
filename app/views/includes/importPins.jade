@@ -1,0 +1,33 @@
+#importModal.modal.hide.fade(tabindex="-1", role="dialog")
+  .modal-header
+    button.close(type="button", data-dismiss="modal") x
+    h3 Import KML
+  .modal-body 
+    .container-fluid
+      .row-fluid
+        form.span12
+          .row-fluid
+            .span12.pins-importer
+              button.btn Select KML file 
+              input(type='file', data-bind='event: { change: fileSelected }')
+              span(data-bind='text: filename')
+          <!-- ko if: errorMessage().length > 0 || working -->
+          .row-fluid
+            <!-- ko if: errorMessage().length > 0 -->
+            .span12.alert.alert-error
+              span(data-bind='html: errorMessage')
+            <!-- /ko -->
+            <!-- ko if: working -->
+            .span12.alert
+              span importing...
+            <!-- /ko -->
+          <!-- /ko -->
+          .row-fluid.overwrite
+            .span12
+              input(type='checkbox', id='overwrite', data-bind='checked: overwrite')
+              label(for='overwrite') Replace existing pins
+  .modal-footer
+    button.btn(data-dismiss="modal") Cancel
+    button.btn.btn-primary(data-bind='click: importPins') Import 
+
+

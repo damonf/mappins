@@ -1,0 +1,35 @@
+extends layout
+
+block head
+  link(rel='stylesheet', href='/css/map.css')
+  link(rel='stylesheet', href='/css/importPins.css')
+
+block content
+  div.container-fluid
+    include includes/importPins
+    div.navbar.navbar-static-top
+      div.navbar-inner
+        a.brand(href='#') mappins 
+        ul.nav
+          li
+            a(href='#importModal', role="button", data-toggle="modal") Import 
+          li
+            a(href='#') Export 
+          li
+            a(href='#') Edit 
+
+    #mapCanvas
+
+  script(src='/js/jquery.js')
+  script(src='/js/underscore.js')
+  script(src='/js/knockout.js')  
+  script(src='/bootstrap/js/bootstrap-modal.js')
+  script(src='http://maps.google.com/maps/api/js?sensor=false')  
+  script(src='/js/importPins.js')
+  script(src='/js/gmap.js')
+  script
+    $(function() {
+      var gmap = new GMap();
+      gmap.loadPins();
+      initImportPins(gmap);
+    });
