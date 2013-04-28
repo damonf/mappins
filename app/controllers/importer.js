@@ -1,6 +1,8 @@
 var xml2js = require('xml2js'),
     q = require('q'),
-    pin = require('../../lib/pins')();
+    _pins = require('../../lib/pins');
+
+var pins = Object.create(_pins);
 
 // Render the import pins view.
 exports.importPins = function(req, res) {
@@ -19,11 +21,10 @@ exports.importKml = function(req, res) {
 
       var result;
       if (req.body.overwrite === 'true') {
-        result = q.ninvoke(pin, 'deleteAllPins').then(function() { 
-          return q.ninvoke(pin, 'saveKmlPins', kml); });
+        result = pins.deleteAllPins().then(function() { return pins.savePlacemarks(kml); });
       }
       else {
-        result = q.ninvoke(pin, 'saveKmlPins', kml);
+        result = pins.savePlacemarks(kml);
       }
 
       result.then(function(count) {
@@ -36,6 +37,7 @@ exports.importKml = function(req, res) {
           res.send({ error: msg});
       })
       .done();
+
     },
     function(err) {
       var msg = 'error parsing pins file: ' + (err.message || err);

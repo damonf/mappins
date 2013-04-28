@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+  <name>Travels</name>
+  <description><![CDATA[Places i've been.]]></description>
+  <Style id="style1">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/grn-pushpin.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Placemark>
+    <name>Port Arthur</name>
+    <Snippet>Tasmania</Snippet>
+    <description><![CDATA[Tasmania]]></description>
+    <styleUrl>#style1</styleUrl>
+    <Point>
+      <coordinates>147.850693,-43.138973,0.000000</coordinates>
+    </Point>
+  </Placemark>
+</Document>
+</kml>

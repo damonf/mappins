@@ -1,5 +1,7 @@
 var q = require('q'),
-    pin = require('../../lib/pins')();
+    _pins = require('../../lib/pins');
+
+var pins = Object.create(_pins);
 
 // Show the map.
 exports.index = function(req, res) {
@@ -11,7 +13,7 @@ exports.index = function(req, res) {
 exports.pins = function(req, res) {
   console.log('route - pins');
 
-  q.ninvoke(pin, 'loadAllPins')
+  pins.loadAllPins()
   .then(function(result) {
       console.log('loaded ' + result.length + ' pins');
       res.send({ pins: result });
