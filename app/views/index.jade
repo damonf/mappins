@@ -25,11 +25,13 @@ block content
   script(src='/js/knockout.js')  
   script(src='/bootstrap/js/bootstrap-modal.js')
   script(src='http://maps.google.com/maps/api/js?sensor=false')  
-  script(src='/js/importPins.js')
+  script(src='/js/mpins.js')
   script(src='/js/gmap.js')
+  script(src='/js/importPins.js')
   script
     $(function() {
-      var gmap = new GMap();
-      gmap.loadPins();
-      initImportPins(gmap);
+      var gmap = mpins.gmap.create(document.getElementById("mapCanvas"), { lat: -37.824577, lng: 145.051521 }, 'img/pin-red.png');
+      gmap.loadPins('pins', 'img/pin-red.png');
+      this.vm = mpins.importPinsVM.create(gmap);
+      ko.applyBindings(this.vm, document.getElementById("importModal"));
     });

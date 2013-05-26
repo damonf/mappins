@@ -1,15 +1,11 @@
-Mappins
-=========
+Mappins 
+========= 
+A node.js app that uses the google maps API for viewing the placemarks stored in a KML file.  You can import a KML file and the placemarks are loaded into a mongo database before being displayed on the map as a bunch of pins.
 
-A node.js app that uses the google maps API for viewing the placemarks stored in a KML file.  At the moment you can import a KML file and the placemarks are loaded into a mongo database before being displayed on the map as a bunch of pins.
-
-This is a work in progress with edit and export features coming soon.
-
-Note: You need to have node.js and mongodb installed and running and an active internet connection.
+Tested in chrome only.
 
 Tech
------------
-
+----------- 
 Mappins uses a number of open source projects to work properly:
 
 * [node.js] - evented I/O for the backend
@@ -22,6 +18,8 @@ Mappins uses a number of open source projects to work properly:
 * [q] - tool for making and composing asynchronous promises in JavaScript 
 * [mocha] - a feature-rich JavaScript test framework 
 * [underscore] - a utility-belt library for JavaScript 
+* [jsTestDriver] - javascript unit test console
+* [sinon] - standalone test spies, stubs and mocks for JavaScript
 
   [node.js]: http://nodejs.org
   [express]: http://expressjs.com
@@ -33,5 +31,5 @@ Mappins uses a number of open source projects to work properly:
   [q]: https://github.com/kriskowal/q
   [mocha]: http://visionmedia.github.com/mocha/
   [underscore]: http://underscorejs.org/
-
-
+  [jsTestDriver]: https://code.google.com/p/js-test-driver/
+  [sinon]: http://sinonjs.org/

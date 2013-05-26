@@ -16,12 +16,12 @@ exports.pins = function(req, res) {
   pins.loadAllPins()
   .then(function(result) {
       console.log('loaded ' + result.length + ' pins');
-      res.send({ pins: result });
+      res.send(result);
     },
     function(err) {
       var msg = 'error loading pins: ' + (err.message || err);
       console.error(msg);
-      res.send({ error: msg });
+      res.send(msg);
   })
   .done();
 };

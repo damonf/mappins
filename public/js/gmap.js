@@ -1,63 +1,87 @@
-function GMap() {
-  if (!(this instanceof GMap)) { 
-    return new GMap();
+/*jshint indent: 2,strict: true,jquery: true */
+/*globals mpins: false, google: false, _: false*/
+
+(function () {
+
+  "use strict";
+
+  function create(mapElement, mapCenter, pinImageUrl) {
+    /*jshint validthis: true */
+    return Object.create(this, {
+      // an array of google markers currently on the map
+      '_markers' : {
+        value : []
+      },
+      // the google map
+      '_theMap' : {
+        value : new google.maps.Map(mapElement, {
+          center: new google.maps.LatLng(mapCenter.lat, mapCenter.lng),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }) 
+      },
+      '_pinImageUrl' : {
+        value : pinImageUrl
+      }
+    });
   }
 
-  this.theMap = new google.maps.Map(document.getElementById("mapCanvas"), {
-    center: new google.maps.LatLng(-37.824577, 145.051521),
-    zoom: 8,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
+  function putPin(pin, pinImageUrl) {
+    /*jshint validthis: true */
+    var name = pin.name + ', ' + pin.description;
+    var longitude = pin.longitude;
+    var latitude = pin.latitude;
+    var pinImage = new google.maps.MarkerImage(pinImageUrl || this._pinImageUrl);
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(latitude, longitude),
+      map: this._theMap,
+      icon: pinImage,
+      title: name 
+    });
 
-  this.markers = [];
-}
+    this._markers.push(marker);
+  }
 
-// Put a single pin on the map.
-GMap.prototype.putPin = function(pin) {
-  var name = pin.name + ', ' + pin.description;
-  var longitude = pin.longitude;
-  var latitude = pin.latitude;
-  var pinImageUrl = 'img/pin-red.png';
-  var pinImage = new google.maps.MarkerImage(pinImageUrl);
-  var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(latitude, longitude),
-    map: this.theMap,
-    icon: pinImage,
-    title: name 
-  });
+  function removePins() {
+    /*jshint validthis: true */
+    _.each(this._markers, function (m) { m.setMap(null); });
+    return this._markers.splice(0, this._markers.length);
+  }
 
-  this.markers.push(marker);
-};
+  function loadPins(pinsUrl, pinImageUrl, onComplete) {
+    /*jshint validthis: true */
+    var that = this;
 
-// Remove all pins from the map.
-GMap.prototype.removePins = function() {
-  _.each(this.markers, function(m) { m.setMap(null); });
-};
+    $.ajax({
+      type: 'GET',
+      url: pinsUrl,
+      dataType: 'json' 
+    }).done(function (data) {
+      if (data instanceof Array) {
+        _.each(data, function (pin) { that.putPin(pin, pinImageUrl); });
+        if (onComplete)
+          onComplete(null, data);
+      }
+      else if (data) {
+        if (onComplete)
+          onComplete(data);
+      } 
+      else {
+        if (onComplete)
+          onComplete(pinsUrl + ' returned no data');
+      }
+    }).fail(function (data) {
+      if (onComplete)
+        onComplete(data); 
+    });
+  }
 
-// Load the pins and put them on the map.
-GMap.prototype.loadPins = function() {
-  var that = this;
+  mpins.gmap = {
+    putPin: putPin,
+    create: create,
+    removePins: removePins,
+    loadPins: loadPins
+  };
 
-  $.ajax({
-    type: 'GET',
-    url: 'pins',
-    dataType: 'json' 
-  }).done(function( data ) {
-    console.log(data);
-    if (data.pins) {
-      that.markers.length = 0;
-      var pins = data.pins;
-      _.each(pins, function(pin) { that.putPin(pin); });
-    }
-    else if (data.error) {
-      console.log(data.error);
-    } 
-    else {
-      console.log('* empty response *');
-    }
-  }).fail(function( data ) {
-    console.log('failed to get pins');
-    console.log(data);
-  });
-};
+}());
 
