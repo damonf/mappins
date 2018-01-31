@@ -29,7 +29,7 @@ Mappins uses a number of open source projects to work properly:
   [less]: http://lesscss.org/
   [mongodb]: http://www.mongodb.org/
   [q]: https://github.com/kriskowal/q
-  [mocha]: http://visionmedia.github.com/mocha/
+  [mocha]: http://mochajs.org/
   [underscore]: http://underscorejs.org/
   [jsTestDriver]: https://code.google.com/p/js-test-driver/
   [sinon]: http://sinonjs.org/
